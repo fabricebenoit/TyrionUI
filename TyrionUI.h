@@ -1,6 +1,6 @@
 /*
-  Morse.h - Library for flashing Morse code.
-  Created by David A. Mellis, November 2, 2007.
+  TyrionUI.h - Arduino UI.
+  Created by Fabrice BENOIT, January 10, 2013
   Released into the public domain.
 */
 #ifndef TyrionUI_h

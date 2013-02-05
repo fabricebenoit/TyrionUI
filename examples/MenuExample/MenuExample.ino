@@ -16,9 +16,8 @@ int pinDroite = 5;
 TyrionUI tyrion(LCDpin, pinHaut, pinBas, pinGauche, pinDroite, pinCentre);
 
 void setup(){
-  delay(1000);
+  delay(2000);
   tyrion.init();
-  //tyrion = new TyrionUI(LCDpin, pinHaut, pinBas, pinGauche, pinDroite, pinCentre);
   delay(1000);
   tyrion.disable();
   delay(1000);
