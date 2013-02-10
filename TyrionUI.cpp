@@ -18,26 +18,6 @@ TyrionUI::TyrionUI(int pinLCD, int pinT, int pinB, int pinL, int pinR, int pinC)
     _lastJoy = 0;
     editMode = false;
     _pinLCD = pinLCD;
-    
-    _pinT = pinT;
-    _pinB = pinB;
-    _pinL = pinL;
-    _pinR = pinR;
-    _pinC = pinC;
-    
-    // Les pins connectés au joystick sont configurés en entrées
-    pinMode(_pinT, INPUT);
-    pinMode(_pinB, INPUT);
-    pinMode(_pinL, INPUT);
-    pinMode(_pinR, INPUT);
-    pinMode(_pinC, INPUT);
-    
-    // On active les résistances internes des pin Arduino pour avoir des valeurs cohérentes
-    digitalWrite(_pinT, HIGH);
-    digitalWrite(_pinB, HIGH);
-    digitalWrite(_pinL, HIGH);
-    digitalWrite(_pinR, HIGH);
-    digitalWrite(_pinC, HIGH);
 }
 
 void TyrionUI::init(int pagesProps[], int nbPages){
@@ -45,14 +25,6 @@ void TyrionUI::init(int pagesProps[], int nbPages){
     _nbPages = nbPages;
     _screen.clear();
     enable();
-    
-    //{2, 4, 8, 3, 6};
-    /*
-    int retour = _pagesProps[1];
-    _screen.setCursor(1,1);
-    _screen.print(String(retour));
-    delay(2000);
-    */
     
     byte invader[8] = {
       B00000,
@@ -166,7 +138,6 @@ void TyrionUI::init(int pagesProps[], int nbPages){
 
 void TyrionUI::updateScreen(String line1, String line2){
   
-  
   if(line1 != _lastLine1){
     _lastLine1 = line1;
     _screen.setCursor(1,3);
@@ -179,15 +150,11 @@ void TyrionUI::updateScreen(String line1, String line2){
     _screen.print(_lastLine2);
   }
   
-  
 }
 
 int TyrionUI::updateState()
 {
-  //_screen.setCursor(1,3);
-  //_screen.print(getJoyStick());
-  
-  int joyPos = getJoyStick();
+  int joyPos = _joystick.getJoyStick();
   
   if(joyPos==2){
        editMode = !editMode;
@@ -205,22 +172,11 @@ int TyrionUI::updateState()
       }
   }
   
-  //int * retour = _pagesProps[0];
-  
-  //return *retour;
-  //_screen.setCursor(1,1);
-  //_screen.print(String(*retour));
-  
-  //return *_pagesProps[_currPage];
   int retour = _pagesProps[_currPage];
   
   return retour;
-  //_screen.setCursor(1,1);
-  //_screen.print(String(retour));
-  //delay(1000);
   
-  
-  return _currPage;
+  //return _currPage;
 }
 
 void TyrionUI::_prevPage(){
@@ -237,62 +193,6 @@ void TyrionUI::_nextPage(){
   }else{
     _currPage = 0;
   }
-}
-
-int TyrionUI::getJoyStick()
-{
-  unsigned long currT = millis();
-  
-  int currJoy = 0;
-  int retour = 0;
-  
-  if(currT-_lastJoyChange>300){
-    if(!digitalRead(_pinT)){
-        currJoy = 1;//Top
-     }else 
-     if(!digitalRead(_pinC)){
-        currJoy = 2;//Center
-     }else 
-     if(!digitalRead(_pinL)){
-        currJoy = 3;//Left
-     }else 
-     if(!digitalRead(_pinB)){
-        currJoy = 4;//Bottom
-     }else 
-     if(!digitalRead(_pinR)){
-        currJoy = 5;//Right
-     }
-     
-     
-     
-     //_lastJoyChange = currT;
-     
-     
-     if(currJoy!=0){
-       if(currJoy == _lastJoy){
-         //_lastJoy = 0;
-         _lastJoyChange = currT;
-         retour = currJoy;
-       }else{
-         //currJoy = 0;
-       }
-       
-       
-     }
-     
-     
-    
-  }else{
-    
-  }
-    
-  _lastJoy = currJoy;
-  
-  //_screen.setCursor(1,16);
-  //_screen.print(String(_lastJoy));
-  
-  return retour;
-  
 }
 
 

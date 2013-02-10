@@ -38,11 +38,7 @@ class TyrionUI
     
   private:
     int _pinLCD;
-    int _pinT;
-    int _pinB;
-    int _pinL;
-    int _pinR;
-    int _pinC;
+    
     serLCD _screen;
     boolean _enabled;
     int _currPage;
